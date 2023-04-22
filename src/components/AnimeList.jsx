@@ -4,8 +4,14 @@ import AnimeListCard from "./Cards/AnimeList/AnimeListCard";
 
 const AnimeList = () => {
     return(
-        <View style={{marginTop: 16, gap: 12}}>
+        <View style={{marginTop: 16}}>
             <AnimeListCard/>
+            <AnimeListCard/>
+            <AnimeListCard/>
+            <AnimeListCard/>
+
+
+
         </View>
     )
 }
