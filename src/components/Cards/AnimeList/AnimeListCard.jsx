@@ -8,9 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 
-
-const AnimeListCard = ({animeData}) => {
-
+const AnimeListCard = ({ animeData }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.containerBtn}>
@@ -25,7 +23,10 @@ const AnimeListCard = ({animeData}) => {
             style={styles.animeImage}
           />
           <Text style={styles.animeDescription}>
-            {animeData?.title?.english ? animeData?.title?.english : animeData?.title?.romaji} {"\n"}
+            {animeData?.title?.english
+              ? animeData?.title?.english
+              : animeData?.title?.romaji}{" "}
+            {"\n"}
             {animeData?.title?.native}
           </Text>
         </View>

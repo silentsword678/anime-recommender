@@ -5,11 +5,13 @@ import AnimeList from "./src/components/AnimeList";
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <AnimeList />
-      </ScrollView>
-    </SafeAreaView>
+    <View style={{ backgroundColor: "black", flex: 1 }}>
+      <SafeAreaView style={styles.container}>
+        <ScrollView>
+          <AnimeList />
+        </ScrollView>
+      </SafeAreaView>
+    </View>
   );
 };
 
