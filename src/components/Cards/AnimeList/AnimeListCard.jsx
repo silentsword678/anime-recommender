@@ -9,9 +9,12 @@ import {
 } from "react-native";
 
 const AnimeListCard = ({ animeData }) => {
+    const handlePress = () =>{
+        
+    }
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.containerBtn}>
+      <TouchableOpacity style={styles.containerBtn} onPress={handlePress}>
         <View style={styles.containerImageAndText}>
           <Image
             source={
@@ -23,11 +26,13 @@ const AnimeListCard = ({ animeData }) => {
             style={styles.animeImage}
           />
           <Text style={styles.animeDescription}>
-            {animeData?.title?.english
+            English: {animeData?.title?.english
               ? animeData?.title?.english
               : animeData?.title?.romaji}{" "}
             {"\n"}
-            {animeData?.title?.native}
+            Japanese: {animeData?.title?.native}
+            {"\n"}
+            Average rating: {animeData?.averageScore}
           </Text>
         </View>
       </TouchableOpacity>
