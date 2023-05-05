@@ -10,7 +10,7 @@ import { ScrollView } from "react-native";
 const WhatsHot = () => {
     //Get the top 5 anime
     var query = `
-    query ($page: Int, $perPage: Int, $seasonYear: Int) {
+    query ($page: Int, $perPage: Int, $seasonYear: Int, $season: MediaSeason) {
         Page(page: $page, perPage: $perPage) {
           pageInfo {
             total
@@ -20,7 +20,7 @@ const WhatsHot = () => {
             perPage
           }
           #This filters by season year and finds the top rated.
-          media (sort: SCORE_DESC, seasonYear: $seasonYear) {
+          media (sort: SCORE_DESC, seasonYear: $seasonYear, season: $season) {
             id
             seasonYear
             season
@@ -38,11 +38,43 @@ const WhatsHot = () => {
       }
       
     `;
+    // get the current date and add to query for the current season
+    const currentDate = new Date()
+    var currentYear = currentDate.getFullYear()
+    // console.log("This is the current year: ", currentYear)
+    var currentMonth = currentDate.getMonth()
+    let season
+
+    switch (currentMonth) {
+      case 0:
+      case 1:
+      case 11:
+        season = "WINTER"
+        currentYear = currentYear + 1
+        break;
+      case 2:
+      case 3:
+      case 4: 
+        season = "SPRING"
+        break;
+      case 5:
+      case 6:
+      case 7:
+        season = "SUMMER"
+      case 8:
+      case 9:
+      case 10:
+        season = "FALL"
+      default:
+        season = "WINTER"
+        break;
+    }
     
     var variables = {
         page: 1,
         perPage: 5,
-        seasonYear: 2023
+        seasonYear: currentYear,
+        season: season
     };
     
     const { data, isLoading, error, refetch } = useGraphQLFetch(query, variables);
