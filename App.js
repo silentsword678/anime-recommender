@@ -14,9 +14,9 @@ const App = () => {
     //   </SafeAreaView>
     // </View>
     <View style={styles.container}>
-        <NavigationContainer styles={{backgroundColor: "black"}}>
+      <NavigationContainer style={styles}>
         <Tabs />
-    </NavigationContainer>
+      </NavigationContainer>
     </View>
   );
 };
@@ -24,7 +24,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black"
+    backgroundColor: "black",
   },
 });
 

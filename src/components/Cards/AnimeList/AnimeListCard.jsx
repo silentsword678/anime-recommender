@@ -26,11 +26,12 @@ const AnimeListCard = ({ animeData }) => {
             style={styles.animeImage}
           />
           <Text style={styles.animeDescription}>
-            English: {animeData?.title?.english
+            {/* English:  */}
+            {animeData?.title?.english
               ? animeData?.title?.english
               : animeData?.title?.romaji}{" "}
-            {"\n"}
-            Japanese: {animeData?.title?.native}
+            {/* {"\n"} */}
+            {/* Japanese: {animeData?.title?.native} */}
             {"\n"}
             Average rating: {animeData?.averageScore}
           </Text>

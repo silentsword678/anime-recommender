@@ -26,8 +26,8 @@ const Tabs = () => {
         >
       {/* planning redesign */}
       {/* <Tab.Screen name="Home" component={AnimeList} /> */}
-      <Tab.Screen name="Hot" component={WhatsHot} />
-      <Tab.Screen name="Top 20" component={AnimeList} />
+      <Tab.Screen name="Hot Right Now" component={WhatsHot} />
+      <Tab.Screen name="All time" component={AnimeList} />
 
       {/* This is a difficult component to implement when you don't know the size you're quering from...*/}
       {/* <Tab.Screen name="Random" component={RandomAnime} /> */}

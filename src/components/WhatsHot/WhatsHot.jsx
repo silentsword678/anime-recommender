@@ -1,15 +1,20 @@
 import React from "react";
-import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import AnimeListCard from "../Cards/AnimeList/AnimeListCard";
-import { useRouter } from "expo-router";
 import useGraphQLFetch from "../../../hooks/useGraphQLFetch";
 import { ActivityIndicator } from "react-native";
 import { Alert } from "react-native";
-import { ScrollView } from "react-native";
+import { styleProps } from "react-native-web/dist/cjs/modules/forwardedProps";
 
 const WhatsHot = () => {
-    //Get the top 5 anime
-    var query = `
+  //Get the top 5 anime
+  var query = `
     query ($page: Int, $perPage: Int, $seasonYear: Int, $season: MediaSeason) {
         Page(page: $page, perPage: $perPage) {
           pageInfo {
@@ -38,96 +43,82 @@ const WhatsHot = () => {
       }
       
     `;
-    // get the current date and add to query for the current season
-    const currentDate = new Date()
-    var currentYear = currentDate.getFullYear()
-    // console.log("This is the current year: ", currentYear)
-    var currentMonth = currentDate.getMonth()
-    let season
+  // get the current date and add to query for the current season
+  const currentDate = new Date();
+  var currentYear = currentDate.getFullYear();
+  // console.log("This is the current year: ", currentYear)
+  var currentMonth = currentDate.getMonth();
+  let season;
 
-    switch (currentMonth) {
-      case 0:
-      case 1:
-      case 11:
-        season = "WINTER"
-        currentYear = currentYear + 1
-        break;
-      case 2:
-      case 3:
-      case 4: 
-        season = "SPRING"
-        break;
-      case 5:
-      case 6:
-      case 7:
-        season = "SUMMER"
-      case 8:
-      case 9:
-      case 10:
-        season = "FALL"
-      default:
-        season = "WINTER"
-        break;
-    }
-    
-    var variables = {
-        page: 1,
-        perPage: 5,
-        seasonYear: currentYear,
-        season: season
-    };
-    
-    const { data, isLoading, error, refetch } = useGraphQLFetch(query, variables);
-    console.log(JSON.stringify(data))
+  switch (currentMonth) {
+    case 0:
+    case 1:
+    case 11:
+      season = "WINTER";
+      currentYear = currentYear + 1;
+      break;
+    case 2:
+    case 3:
+    case 4:
+      season = "SPRING";
+      break;
+    case 5:
+    case 6:
+    case 7:
+      season = "SUMMER";
+    case 8:
+    case 9:
+    case 10:
+      season = "FALL";
+    default:
+      season = "WINTER";
+      break;
+  }
+
+  var variables = {
+    page: 1,
+    perPage: 5,
+    seasonYear: currentYear,
+    season: season,
+  };
+
+  const { data, isLoading, error, refetch } = useGraphQLFetch(query, variables);
 
   const handleClick = () => {
     refetch();
   };
 
-    return(
-        <ScrollView style={{backgroundColor: "black"}}>
-           <View style={{marginTop: 16, backgroundColor:"black"}}>
-            {/* <AnimeListCard/> */}
-            <View>
-                {isLoading ? (
-                    <ActivityIndicator></ActivityIndicator>
-                ): error ? (
-                    Alert.alert(
-                        'Alert Title', // Title of the alert
-                        'Alert message goes here', // Alert message
-                        [
-                          {
-                            text: 'Cancel',
-                            onPress: () => console.log('Cancel Pressed'),
-                            style: 'cancel',
-                          },
-                          {
-                            text: 'OK',
-                            onPress: () => console.log('OK Pressed'),
-                          },
-                        ],
-                        {
-                          cancelable: true, // Allows the alert to be dismissed by tapping outside of the alert box
-                        }
-                      )) : (
-                        // console.log(data.Page.media.map),
-                        data?.Page?.media?.map((animeData) => (
-                            <AnimeListCard 
-                                key={animeData.id}
-                                animeData={animeData}
-                            
-                            />
-                        ))
-                      )
-                }
-            </View>
+  return (
+    <View style={{ marginTop: 16, backgroundColor: "black", flex: 1 }}>
+      <View>
+        {isLoading ? (
+          <ActivityIndicator />
+        ) : error ? (
+          <Alert
+            title={"Alert Title"}
+            message={"Alert message goes here"}
+            buttons={[
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+              },
+              { text: "OK", onPress: () => console.log("OK Pressed") },
+            ]}
+            cancelable={true}
+          />
+        ) : (
+          <FlatList
+            // style={{ backgroundColor: "black" }}
+            data={data?.Page?.media}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <AnimeListCard animeData={item}/>}
+            contentContainerStyle={{ columnGap: 8 }}
+          />
+        )}
+      </View>
+    </View>
+  );
+};
 
-
-
-        </View>
-         </ScrollView>
-        
-    )
-}
-
-export default WhatsHot
+export default WhatsHot;
