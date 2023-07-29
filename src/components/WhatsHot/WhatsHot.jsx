@@ -66,14 +66,20 @@ const WhatsHot = () => {
     case 6:
     case 7:
       season = "SUMMER";
+      break;
     case 8:
     case 9:
     case 10:
       season = "FALL";
+      break;
     default:
       season = "WINTER";
       break;
   }
+
+  console.log("This is the current currentMonth: ", currentMonth)
+
+  console.log("This is the current season: ", season)
 
   var variables = {
     page: 1,
@@ -112,7 +118,7 @@ const WhatsHot = () => {
             // style={{ backgroundColor: "black" }}
             data={data?.Page?.media}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => <AnimeListCard animeData={item}/>}
+            renderItem={({ item }) => <AnimeListCard animeData={item} />}
             contentContainerStyle={{ columnGap: 8 }}
           />
         )}
